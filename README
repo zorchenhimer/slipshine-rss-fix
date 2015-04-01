@@ -1,0 +1,11 @@
+A short script to fix Slipshine's broken RSS feed.
+
+All links are replaced with their real link instead of just
+'http://members.orgymania.net/'.  I've also added a guid for each item.  This
+fixes update issues with some RSS clients.
+
+rss-fix.pl requires XML::RSS, while rss-fix_no-xml-rss.pl does not.  Both
+require LWP::Simple and Digest::MD5.
+
+Note: this is meant to run on a webserver and act as a proxy to slipshine's
+feed.  Requires a webserver capable of runing perl via CGI scripts.
