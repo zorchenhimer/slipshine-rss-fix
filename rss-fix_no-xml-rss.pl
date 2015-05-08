@@ -24,13 +24,17 @@ foreach my $item (@items) {
     my @list_items = split /<li>/, $1;
     foreach my $l (@list_items) {
         if ($l) {
-            $l =~ m#<a href="(.*?)">(.*?)</a>#;
+            $l =~ m#<a href="(.*?)">(.*?)</a>(.*)#;
             my $ul_link = $1;
             my $ul_title = $2;
+            my $ul_title_b = $3;
+
+            $ul_title_b =~ s/<(.*?)>//g;
 
             my %link_data;
             $link_data{'link'} = $ul_link;
             $link_data{'title'} = $ul_title;
+            $link_data{'titleb'} = $ul_title_b;
             $link_data{'pubDate'} = $sections{'pubDate'};
 
             push @ul_links, \%link_data;
@@ -53,7 +57,7 @@ foreach my $nlink (@ul_links) {
     print "\t\t<guid>$nlink->{link}</guid>\n";
     print "\t\t<link>$nlink->{link}</link>\n";
     print "\t\t<pubDate>$nlink->{pubDate}</pubDate>\n";
-    print "\t\t<description><![CDATA[<a href=\"$nlink->{link}\">$nlink->{title}</a>]]></description>\n";
+    print "\t\t<description><![CDATA[<a href=\"$nlink->{link}\">$nlink->{title}</a>$nlink->{titleb}]]></description>\n";
     print "\t</item>\n";
 }
 print "</channel>\n</rss>\n";
